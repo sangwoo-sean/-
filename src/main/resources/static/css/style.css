@@ -126,8 +126,33 @@ button.like {
     align-items: center;
 }
 
-button.edit,
-button.edit:hover,
-button.edit:focus {
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:focus {
     background: var(--secondary);
+}
+
+#edit-request-form {
+    max-height: 0;
+    overflow: hidden;
+}
+#edit-request-form.active {
+    max-height: 100%;
+}
+
+button.opened {
+    display: none;
+    height: 0;
+}
+button.closed {
+    display: none;
+    height: 0;
+}
+button.opened.active {
+    height: 100%;
+    display: block;
+}
+button.closed.active {
+    height: 100%;
+    display: block;
 }

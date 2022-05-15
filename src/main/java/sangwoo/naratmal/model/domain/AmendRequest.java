@@ -16,4 +16,12 @@ public class AmendRequest {
     private Item item;
     private String content;
     private LocalDateTime createdDate;
+
+    public static AmendRequest create(Long itemId, String content) {
+        AmendRequest amendRequest = new AmendRequest();
+        amendRequest.item = new Item(itemId);
+        amendRequest.content = content;
+        amendRequest.createdDate = LocalDateTime.now();
+        return amendRequest;
+    }
 }

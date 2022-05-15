@@ -47,16 +47,25 @@
             </div>
             <div class="modal-body text-start">
                 <h3 class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut blanditiis, dolorem dolores fugit modi obcaecati omnis quas quibusdam similique voluptate.</h3>
+                <form id="edit-request-form">
+                    <div class="mt-2">
+                        <h2 class="text-start mt-3">수정 요청</h2>
+                        <textarea class="form-control" id="edit-request-content" rows="10" placeholder="설명을 입력해주세요."></textarea>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                <button type="button" class="btn btn-primary edit">
+                <button type="button" class="btn btn-secondary closed active" data-bs-dismiss="modal">닫기</button>
+                <button type="button" class="btn btn-primary closed active" id="edit-request-button">
                     <svg width="16" height="16" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M19.4648 1.09154C19.0743 0.701014 18.4411 0.701014 18.0506 1.09154C17.9516 1.19055 17.8015 1.21467 17.6708 1.16439C16.5979 0.751689 15.3358 0.977943 14.4706 1.84315L3.59661 12.7172C3.44041 12.8734 3.44041 13.1266 3.59662 13.2828L8.68778 18.374C8.84399 18.5302 9.09726 18.5302 9.25347 18.374L20.1274 7.5C20.9926 6.6348 21.2189 5.3726 20.8062 4.29977C20.7559 4.16907 20.78 4.01897 20.879 3.91997C21.2696 3.52944 21.2696 2.89628 20.879 2.50575L19.4648 1.09154ZM18.954 5.27925C19.1103 5.43546 19.1103 5.68872 18.954 5.84493L9.25347 15.5456C9.09726 15.7018 8.84399 15.7018 8.68778 15.5456L6.42504 13.2828C6.26883 13.1266 6.26883 12.8734 6.42504 12.7172L16.1256 3.01651C16.2818 2.8603 16.5351 2.8603 16.6913 3.01651L18.954 5.27925Z" fill="white"/>
                         <path d="M0.675362 21.766C0.376756 21.8475 0.102765 21.5735 0.184213 21.2749L1.94032 14.8367C2.02114 14.5404 2.39192 14.4419 2.60908 14.6591L7.29086 19.3415C7.50801 19.5587 7.40954 19.9295 7.11324 20.0103L0.675362 21.766Z" fill="white"/>
                     </svg>
                     <span>수정요청</span>
                 </button>
+
+                <button type="button" class="btn btn-secondary opened" id="shrink-button">취소</button>
+                <button type="button" class="btn btn-primary opened" onclick="submitAmendRequest();">제출</button>
             </div>
         </div>
     </div>
@@ -94,19 +103,25 @@
 <script>
     const detail_modal = document.getElementById('detail-modal');
     const request_modal = document.getElementById('request-modal');
+    const edit_request_button = document.getElementById('edit-request-button');
+    const shrink_button = document.getElementById('shrink-button');
+    const edit_request_form = document.getElementById('edit-request-form');
     const detail_modal_bs = new bootstrap.Modal(detail_modal);
     const request_modal_bs = new bootstrap.Modal(request_modal);
+    const edit_request_textarea = edit_request_form.querySelector('textarea');
 
-    document.querySelectorAll('#card-wrapper .card').forEach(card => {
+    const attachCardClickEventHandler = (card) => {
         card.addEventListener('click', async () => {
             const itemId = card.dataset.id;
             const {title, description} = await fetchItem(itemId);
 
             detail_modal.querySelector('.modal-title').innerText = title;
             detail_modal.querySelector('.description').innerText = description;
-            detail_modal_bs.show()
+            edit_request_textarea.dataset.id = itemId;
+            detail_modal_bs.show();
         });
-    });
+    }
+    document.querySelectorAll('#card-wrapper .card').forEach(attachCardClickEventHandler);
 
     const fetchItem = (itemId) => {
         return fetch('/api/item/' + itemId)
@@ -115,7 +130,7 @@
             .catch(e => {
                 console.error(e);
             });
-    }
+    };
 
     const submitNewRequest = () => {
         const title_element = request_modal.querySelector('#request-title');
@@ -152,7 +167,56 @@
             .catch(e => {
                 console.error(e);
             });
-    }
+    };
+
+
+    const toggleEditRequestFormArea = (open_mode) => {
+        edit_request_form.classList.toggle('active', open_mode);
+        const closed_buttons = detail_modal.querySelectorAll('.closed');
+        const opened_buttons = detail_modal.querySelectorAll('.opened');
+        closed_buttons.forEach(btn => { btn.classList.toggle('active', !open_mode) });
+        opened_buttons.forEach(btn => { btn.classList.toggle('active', open_mode) });
+    };
+    const expandEditRequestFormArea = () => { toggleEditRequestFormArea(true); };
+    const shrinkEditRequestFormArea = () => { toggleEditRequestFormArea(false); };
+
+    edit_request_button.addEventListener('click', expandEditRequestFormArea);
+    shrink_button.addEventListener('click', shrinkEditRequestFormArea);
+    detail_modal.addEventListener('hide.bs.modal', shrinkEditRequestFormArea);
+
+    const registerAmendRequest = (itemId, content) => {
+        const data = {
+            itemId,
+            content
+        }
+        const options = {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json;'
+            },
+            body: JSON.stringify(data)
+        }
+        return fetch('/api/amend-request', options)
+            .then(res => res.json())
+            .then(res => res.data)
+            .catch(e => {
+                console.error(e);
+            });
+    };
+
+    const submitAmendRequest = async () => {
+        const content = edit_request_textarea.value;
+        const itemId = edit_request_textarea.dataset.id;
+        const res = await registerAmendRequest(itemId, content);
+        if (res === true) {
+            alert('수정 요청이 등록되었습니다.');
+            edit_request_textarea.value = '';
+            detail_modal_bs.hide();
+        } else {
+            alert(res);
+        }
+    };
+
 </script>
 </body>
 </html>

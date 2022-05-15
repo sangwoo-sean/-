@@ -26,6 +26,13 @@ public class Item {
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<AmendRequest> amendRequests = new ArrayList<>();
 
+    protected Item() {
+    }
+
+    public Item(Long id) {
+        this.id = id;
+    }
+
     public static Item createItem(String title, String description) {
         Item item = new Item();
         item.title = title;

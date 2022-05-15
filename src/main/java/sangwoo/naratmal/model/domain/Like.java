@@ -18,4 +18,11 @@ public class Like {
     private Item item;
     private String sessionId;
     private LocalDateTime createdDate;
+
+    public static Like createLike(Long itemId, String sessionId) {
+        Like like = new Like();
+        like.item = new Item(itemId);
+        like.sessionId = sessionId;
+        return like;
+    }
 }

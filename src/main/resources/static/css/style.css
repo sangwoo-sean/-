@@ -28,7 +28,7 @@ main {
     min-height: 92vh;
 }
 
-h1  {
+h1 {
     font-size: 34px;
     text-align: center;
     color: var(--primary);
@@ -55,7 +55,7 @@ h3 {
     right: 50px;
     color: var(--white);
     font-weight: bold;
-    background: var(--primary);
+    background: var(--secondary);
     border-radius: 8px;
     padding: 10px 15px;
 }
@@ -69,12 +69,14 @@ h3 {
     text-align: right;
     margin: 10px 0;
 }
+
 #search-bar input {
     margin: 0 15px;
     border-radius: 8px;
     padding: 10px 15px;
     border: 1px solid var(--grey);
 }
+
 #search-bar input:focus {
     outline: none;
 }
@@ -94,4 +96,29 @@ h3 {
 footer {
     color: white;
     text-align: center;
+}
+
+.modal h3 {
+    text-align: start;
+}
+
+.modal-content {
+    border-radius: 20px;
+}
+
+.modal-header, .modal-footer {
+    border: none;
+}
+
+button.like {
+    all: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button.edit,
+button.edit:hover,
+button.edit:focus {
+    background: var(--secondary);
 }

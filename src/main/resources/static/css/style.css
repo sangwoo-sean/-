@@ -1,0 +1,97 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #2B3674;
+    --white: white;
+    --secondary: #0F56B3;
+    --grey: #E0E5F2;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--primary);
+}
+
+main {
+    background: var(--primary);
+}
+
+#main-wrapper {
+    background: mintcream;
+    border-radius: 20px;
+    margin: 20px 20px 10px 20px;
+    padding: 20px;
+    position: relative;
+    min-height: 92vh;
+}
+
+h1  {
+    font-size: 34px;
+    text-align: center;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 20px;
+    text-align: center;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 16px;
+    text-align: center;
+    color: var(--primary);
+}
+
+#new-request-button {
+    border: none;
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    color: var(--white);
+    font-weight: bold;
+    background: var(--primary);
+    border-radius: 8px;
+    padding: 10px 15px;
+}
+
+#card-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#search-bar {
+    text-align: right;
+    margin: 10px 0;
+}
+#search-bar input {
+    margin: 0 15px;
+    border-radius: 8px;
+    padding: 10px 15px;
+    border: 1px solid var(--grey);
+}
+#search-bar input:focus {
+    outline: none;
+}
+
+.card {
+    padding: 15px;
+    border: none;
+    background: transparent;
+}
+
+.card .card-body {
+    padding: 30px 10px;
+    border-radius: 16px;
+    box-shadow: 5px 15px 20px 5px rgba(112, 144, 176, 0.12);
+}
+
+footer {
+    color: white;
+    text-align: center;
+}

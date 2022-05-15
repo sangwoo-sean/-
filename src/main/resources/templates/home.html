@@ -1,10 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <title>나랏말</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-    <h1>hello</h1>
+<main class="container-fluid">
+    <div id="main-wrapper">
+        <h1>나랏말</h1>
+        <h3>헷갈리는 맞춤법, 한번에 확인하세요</h3>
+        <div id="search-bar">
+            <input type="text" placeholder="검색어를 입력하세요."/>
+        </div>
+
+        <div id="card-wrapper">
+            <div class="card col-2">
+                <div class="card-body">
+                    <h2>card card</h2>
+                </div>
+            </div>
+            <div class="card col-2">
+                <div class="card-body">
+                    <h2>card card</h2>
+                </div>
+            </div>
+            <div class="card col-2">
+                <div class="card-body">
+                    <h2>card card</h2>
+                </div>
+            </div>
+            <div class="card col-2">
+                <div class="card-body">
+                    <h2>card card</h2>
+                </div>
+            </div>
+            <div class="card col-2">
+                <div class="card-body">
+                    <h2>card card</h2>
+                </div>
+            </div>
+            <div class="card col-2">
+                <div class="card-body">
+                    <h2>card card</h2>
+                </div>
+            </div>
+            <div class="card col-2">
+                <div class="card-body">
+                    <h2>card card</h2>
+                </div>
+            </div>
+            <div class="card col-2">
+                <div class="card-body">
+                    <h2>card card</h2>
+                </div>
+            </div>
+            <div class="card col-2">
+                <div class="card-body">
+                    <h2>card card</h2>
+                </div>
+            </div>
+            <div class="card col-2">
+                <div class="card-body">
+                    <h2>card card</h2>
+                </div>
+            </div>
+            <div class="card col-2">
+                <div class="card-body">
+                    <h2>card card</h2>
+                </div>
+            </div>
+        </div>
+
+        <button id="new-request-button">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 0C7.44772 0 7 0.447715 7 1V7H1C0.447715 7 0 7.44772 0 8C0 8.55229 0.447715 9 1 9H7V15C7 15.5523 7.44772 16 8 16C8.55229 16 9 15.5523 9 15V9H15C15.5523 9 16 8.55229 16 8C16 7.44772 15.5523 7 15 7H9V1C9 0.447715 8.55229 0 8 0Z" fill="white"/>
+            </svg>
+            <span>추가 요청</span>
+        </button>
+    </div>
+</main> <!-- /container -->
+<div th:replace="fragments/footer :: footer"/>
 </body>
 </html>

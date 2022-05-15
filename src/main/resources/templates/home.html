@@ -14,59 +14,9 @@
         </div>
 
         <div id="card-wrapper">
-            <div class="card col-2">
+            <div class="card col-2" th:each="item : ${itemList}">
                 <div class="card-body">
-                    <h2>card card</h2>
-                </div>
-            </div>
-            <div class="card col-2">
-                <div class="card-body">
-                    <h2>card card</h2>
-                </div>
-            </div>
-            <div class="card col-2">
-                <div class="card-body">
-                    <h2>card card</h2>
-                </div>
-            </div>
-            <div class="card col-2">
-                <div class="card-body">
-                    <h2>card card</h2>
-                </div>
-            </div>
-            <div class="card col-2">
-                <div class="card-body">
-                    <h2>card card</h2>
-                </div>
-            </div>
-            <div class="card col-2">
-                <div class="card-body">
-                    <h2>card card</h2>
-                </div>
-            </div>
-            <div class="card col-2">
-                <div class="card-body">
-                    <h2>card card</h2>
-                </div>
-            </div>
-            <div class="card col-2">
-                <div class="card-body">
-                    <h2>card card</h2>
-                </div>
-            </div>
-            <div class="card col-2">
-                <div class="card-body">
-                    <h2>card card</h2>
-                </div>
-            </div>
-            <div class="card col-2">
-                <div class="card-body">
-                    <h2>card card</h2>
-                </div>
-            </div>
-            <div class="card col-2">
-                <div class="card-body">
-                    <h2>card card</h2>
+                    <h2 th:text="${item.title}">card card</h2>
                 </div>
             </div>
         </div>

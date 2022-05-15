@@ -19,7 +19,7 @@ public class ItemRepository {
     }
 
     public List<Item> findAll() {
-        return em.createQuery("SELECT i FROM Item i", Item.class)
+        return em.createQuery("SELECT i FROM Item i ORDER BY i.updatedDate DESC", Item.class)
                 .getResultList();
     }
 

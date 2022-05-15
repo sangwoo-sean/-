@@ -18,4 +18,12 @@ public class NewRequest {
     private String title;
     private String content;
     private LocalDateTime createdDate;
+
+    public static NewRequest create(String title, String content) {
+        NewRequest newRequest = new NewRequest();
+        newRequest.title = title;
+        newRequest.content = content;
+        newRequest.createdDate = LocalDateTime.now();
+        return newRequest;
+    }
 }

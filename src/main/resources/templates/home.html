@@ -67,20 +67,24 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">Modal title</h2>
-                <button class="like">
-                    <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M13.277 0.7754C11.2926 -0.633487 8.84231 0.0239935 7.51944 1.63639C6.19656 0.0239935 3.74623 -0.641314 1.76192 0.7754C0.709632 1.52681 0.0481944 2.7948 0.00309634 4.13325C-0.102132 7.17018 2.48349 9.60442 6.42957 13.338L6.50473 13.4084C7.07597 13.9485 7.95539 13.9485 8.52663 13.4006L8.60931 13.3223C12.5554 9.5966 15.1335 7.16235 15.0358 4.12542C14.9907 2.7948 14.3292 1.52681 13.277 0.7754ZM7.5946 12.1717L7.51944 12.25L7.44427 12.1717C3.8665 8.79823 1.50636 6.56749 1.50636 4.30544C1.50636 2.74001 2.63382 1.56594 4.13708 1.56594C5.2946 1.56594 6.42205 2.34083 6.82042 3.41315H8.22597C8.61682 2.34083 9.74428 1.56594 10.9018 1.56594C12.4051 1.56594 13.5325 2.74001 13.5325 4.30544C13.5325 6.56749 11.1724 8.79823 7.5946 12.1717Z" fill="#4318FF"/>
-                    </svg>
-                    <span>20</span>
-                </button>
+                <h2 class="modal-title">추가 요청</h2>
             </div>
             <div class="modal-body text-start">
-                <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut blanditiis, dolorem dolores fugit modi obcaecati omnis quas quibusdam similique voluptate.</h3>
+                <h5>추가하고 싶은 맞춤법 혼동 사례를 제출 해 주시면 관리자가 확인 후 반영해드립니다.</h5>
+                <form id="new-request-form">
+                    <div class="mt-2">
+                        <label for="request-title" class="col-form-label">제목을 입력해주세요</label>
+                        <input type="text" class="form-control" id="request-title" placeholder="예)안돼 vs 않돼">
+                    </div>
+                    <div class="mt-2">
+                        <label for="request-description" class="col-form-label">설명을 입력해주세요</label>
+                        <textarea class="form-control" id="request-description" rows="10" placeholder="설명을 입력해주세요."></textarea>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                <button type="button" class="btn btn-primary edit">제출</button>
+                <button type="button" class="btn btn-primary edit" onclick="submitNewRequest();">제출</button>
             </div>
         </div>
     </div>
@@ -89,7 +93,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script>
     const detail_modal = document.getElementById('detail-modal');
+    const request_modal = document.getElementById('request-modal');
     const detail_modal_bs = new bootstrap.Modal(detail_modal);
+    const request_modal_bs = new bootstrap.Modal(request_modal);
 
     document.querySelectorAll('#card-wrapper .card').forEach(card => {
         card.addEventListener('click', async () => {
@@ -103,7 +109,44 @@
     });
 
     const fetchItem = (itemId) => {
-        return fetch('/item/' + itemId)
+        return fetch('/api/item/' + itemId)
+            .then(res => res.json())
+            .then(res => res.data)
+            .catch(e => {
+                console.error(e);
+            });
+    }
+
+    const submitNewRequest = () => {
+        const title_element = request_modal.querySelector('#request-title');
+        const title = title_element.value;
+        const content_element = request_modal.querySelector('#request-description');
+        const content = content_element.value;
+        registerNewRequest(title, content)
+            .then(res => {
+                if (res === true) {
+                    alert('요청이 등록되었습니다. 감사합니다.')
+                    title_element.value = '';
+                    content_element.value = '';
+                    request_modal_bs.hide();
+                } else {
+                    alert(res);
+                }
+            });
+    };
+
+    const registerNewRequest = (title, content) => {
+        const data = {
+            title, content
+        }
+        const options = {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json;'
+            },
+            body: JSON.stringify(data)
+        }
+        return fetch('/api/new-request', options)
             .then(res => res.json())
             .then(res => res.data)
             .catch(e => {

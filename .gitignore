@@ -39,3 +39,4 @@ out/
 
 ### custom ###
 gradle
+/src/main/resources/application.properties

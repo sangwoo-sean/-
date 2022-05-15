@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<aside th:fragment="sidebar">
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <a href="#" class="sidebar-brand">
+                Naratmal
+            </a>
+            <div class="sidebar-toggler not-active">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="sidebar-body">
+            <ul class="nav">
+                <li class="nav-item nav-category">Admin</li>
+                <li class="nav-item">
+                    <a href="/admin/items" class="nav-link">
+                        <i class="link-icon" data-feather="book"></i>
+                        <span class="link-title">카드</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/new-requests" class="nav-link">
+                        <i class="link-icon" data-feather="plus"></i>
+                        <span class="link-title">추가요청</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/amend-requests" class="nav-link">
+                        <i class="link-icon" data-feather="edit-3"></i>
+                        <span class="link-title">수정요청</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</aside>

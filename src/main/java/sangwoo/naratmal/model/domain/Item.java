@@ -25,4 +25,14 @@ public class Item {
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<AmendRequest> amendRequests = new ArrayList<>();
+
+    public static Item createItem(String title, String description) {
+        Item item = new Item();
+        item.title = title;
+        item.description = description;
+        item.visited = 0L;
+        item.createdDate = LocalDateTime.now();
+        item.updatedDate = LocalDateTime.now();
+        return item;
+    }
 }

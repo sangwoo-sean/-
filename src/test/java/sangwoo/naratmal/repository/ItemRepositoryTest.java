@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import sangwoo.naratmal.model.domain.Item;
 
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -44,6 +45,7 @@ class ItemRepositoryTest {
         List<Item> itemList = itemRepository.findAll();
 
         //then
-        assertEquals(2, itemList.size());
+        assertTrue(itemList.stream().anyMatch(item -> Objects.equals(item.getId(), item1.getId())));
+        assertTrue(itemList.stream().anyMatch(item -> Objects.equals(item.getId(), item2.getId())));
     }
 }

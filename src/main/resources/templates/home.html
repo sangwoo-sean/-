@@ -42,7 +42,7 @@
                     <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M13.277 0.7754C11.2926 -0.633487 8.84231 0.0239935 7.51944 1.63639C6.19656 0.0239935 3.74623 -0.641314 1.76192 0.7754C0.709632 1.52681 0.0481944 2.7948 0.00309634 4.13325C-0.102132 7.17018 2.48349 9.60442 6.42957 13.338L6.50473 13.4084C7.07597 13.9485 7.95539 13.9485 8.52663 13.4006L8.60931 13.3223C12.5554 9.5966 15.1335 7.16235 15.0358 4.12542C14.9907 2.7948 14.3292 1.52681 13.277 0.7754ZM7.5946 12.1717L7.51944 12.25L7.44427 12.1717C3.8665 8.79823 1.50636 6.56749 1.50636 4.30544C1.50636 2.74001 2.63382 1.56594 4.13708 1.56594C5.2946 1.56594 6.42205 2.34083 6.82042 3.41315H8.22597C8.61682 2.34083 9.74428 1.56594 10.9018 1.56594C12.4051 1.56594 13.5325 2.74001 13.5325 4.30544C13.5325 6.56749 11.1724 8.79823 7.5946 12.1717Z" fill="#4318FF"/>
                     </svg>
-                    <span>20</span>
+                    <span>0</span>
                 </button>
             </div>
             <div class="modal-body text-start">
@@ -187,16 +187,12 @@
     detail_modal.addEventListener('hide.bs.modal', shrinkEditRequestFormArea);
 
     const registerAmendRequest = (itemId, content) => {
-        const data = {
-            itemId,
-            content
-        }
         const options = {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json;'
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify({itemId, content})
         }
         return fetch('/api/amend-request', options)
             .then(res => res.json())

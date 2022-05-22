@@ -97,9 +97,17 @@ h5 {
 }
 
 .card .card-body {
+    background: var(--white);
     padding: 30px 10px;
     border-radius: 16px;
     box-shadow: 5px 15px 20px 5px rgba(112, 144, 176, 0.12);
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.card .card-body:hover {
+    transform: scale(1.1);
+    transition: 0.3s;
 }
 
 footer {
@@ -124,6 +132,7 @@ button.like {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .btn-primary,
@@ -155,4 +164,8 @@ button.opened.active {
 button.closed.active {
     height: 100%;
     display: block;
+}
+
+h3.description {
+    word-break: break-all;
 }

@@ -57,7 +57,7 @@
                                     <tr>
                                         <td th:text="${request.id}">Id</td>
                                         <td th:text="${request.title}">제목</td>
-                                        <td th:text="${request.createdDate}">등록날짜</td>
+                                        <td th:text="${#temporals.format(request.createdDate, 'yyyy.MM.dd')}">등록날짜</td>
                                         <td>
                                             <button class="btn btn-primary btn-xs">
                                                 <i class="link-icon" data-feather="plus"></i>

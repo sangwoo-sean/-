@@ -66,7 +66,7 @@
                                         <td th:text="${item.id}">Id</td>
                                         <td th:text="${item.title}">제목</td>
                                         <td th:text="${item.visited}">조회수</td>
-                                        <td th:text="${item.updatedDate}">수정날짜</td>
+                                        <td th:text="${#temporals.format(item.updatedDate, 'yyyy.MM.dd')}">수정날짜</td>
                                         <td>
                                             <button class="btn btn-primary btn-xs"
                                                     data-target="#desc-modal" data-toggle="modal"

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>NobleUI Responsive Bootstrap 4 Dashboard Template</title>
+    <title>나랏말</title>
     <!-- core:css -->
     <link rel="stylesheet" href="/admin/vendors/core/core.css">
     <!-- endinject -->
@@ -19,6 +19,9 @@
     <link rel="stylesheet" href="/admin/css/demo_1/style.css">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="/admin/images/favicon.png"/>
+
+    <link rel="shortcut icon" href="/image/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/image/favicon.ico" type="image/x-icon">
 </head>
 <body class="sidebar-dark">
 <div class="main-wrapper">
@@ -41,8 +44,12 @@
             <div class="row">
                 <div class="col-md-12 grid-margin stretch-card">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body position-relative">
                             <h6 class="card-title">카드</h6>
+                            <button class="btn btn-primary position-absolute"
+                                    data-target="#create-modal" data-toggle="modal"
+                                    style="right: 20px; top: 20px;">카드 추가
+                            </button>
                             <div class="table-responsive">
                                 <table id="dataTableExample" class="table">
                                     <thead>
@@ -78,6 +85,34 @@
     </div>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="create-modal" data-keyboard="true" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">카드 추가</h2>
+            </div>
+            <div class="modal-body text-start">
+                <form id="new-request-form">
+                    <div class="mt-2">
+                        <label for="title" class="col-form-label">제목을 입력해주세요</label>
+                        <input type="text" class="form-control" id="title" placeholder="예)안돼 vs 않돼">
+                    </div>
+                    <div class="mt-2">
+                        <label for="description" class="col-form-label">설명을 입력해주세요</label>
+                        <textarea class="form-control" id="description" rows="10" placeholder="설명을 입력해주세요."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                <button type="button" class="btn btn-primary edit" onclick="createItem();">제출</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- core:js -->
 <script src="/admin/vendors/core/core.js"></script>
 <!-- endinject -->
@@ -92,5 +127,33 @@
 <!-- custom js for this page -->
 <script src="/admin/js/data-table.js"></script>
 <!-- end custom js for this page -->
+<script>
+    const title_input = document.querySelector('#title');
+    const description_input = document.querySelector('#description');
+
+    function createItem() {
+        const title = title_input.value;
+        const description = description_input.value;
+
+        const data = {
+            title, description
+        }
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;'
+            },
+            body: JSON.stringify(data)
+        }
+        fetch('/api/item', options)
+            .then(res => res.json())
+            .then(res => {
+                if (res.data) location.reload();
+            })
+            .catch(e => {
+                console.error(e);
+            });
+    }
+</script>
 </body>
 </html>

@@ -49,4 +49,8 @@ public class Item {
     public void update(String description) {
         this.description = description;
     }
+
+    public void visited() {
+        this.visited += 1;
+    }
 }

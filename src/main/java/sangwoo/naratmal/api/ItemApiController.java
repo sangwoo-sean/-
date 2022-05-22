@@ -8,6 +8,7 @@ import sangwoo.naratmal.model.domain.Item;
 import sangwoo.naratmal.model.dto.ApiResult;
 import sangwoo.naratmal.repository.ItemRepository;
 import sangwoo.naratmal.repository.LikeRepository;
+import sangwoo.naratmal.service.ItemService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,9 +20,11 @@ public class ItemApiController {
     private final LikeRepository likeRepository;
 
     @GetMapping("/api/item/{itemId}")
+    @Transactional
     public ApiResult selectItem(HttpServletRequest request, @PathVariable Long itemId) {
         String sessionId = request.getSession().getId();
         Item item = itemRepository.findById(itemId); // item 조회
+        item.visited();
         boolean liked = likeRepository.existBySessionIdAndItemId(sessionId, itemId); // 해당 세션이 해당 아이템을 liked 했는지 조회
         Long count = likeRepository.countLikeByItemId(itemId); // 좋아요 개수
         return new ApiResult(new SelectItemResponse(item, liked, count));

@@ -3,9 +3,7 @@ package sangwoo.naratmal.api;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sangwoo.naratmal.model.domain.AmendRequest;
 import sangwoo.naratmal.model.dto.ApiResult;
 import sangwoo.naratmal.repository.AmendRequestRepository;
@@ -25,6 +23,14 @@ public class AmendRequestApiController {
     public ApiResult<Boolean> saveAmendRequest(@RequestBody @Valid CreateAmendRequestRequest request) {
         AmendRequest amendRequest = AmendRequest.create(request.getItemId(), request.getContent());
         amendRequestRepository.save(amendRequest);
+        return new ApiResult<>(true);
+    }
+
+    @DeleteMapping("/api/amend-request/{id}")
+    @Transactional
+    public ApiResult<Boolean> deleteAmendRequest(@PathVariable Long id) {
+        AmendRequest request = amendRequestRepository.findById(id);
+        amendRequestRepository.delete(request);
         return new ApiResult<>(true);
     }
 

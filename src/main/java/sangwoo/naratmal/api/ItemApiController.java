@@ -28,6 +28,14 @@ public class ItemApiController {
         return new ApiResult(savedId);
     }
 
+    @PatchMapping("/api/item/{itemId}")
+    @Transactional
+    public ApiResult updateItem(@PathVariable Long itemId, @RequestBody CreateItemRequest request) {
+        Item item = itemRepository.findById(itemId);
+        item.update(request.getDescription());
+        return new ApiResult(item.getId());
+    }
+
     @Data
     private static class SelectItemResponse {
         private String title;

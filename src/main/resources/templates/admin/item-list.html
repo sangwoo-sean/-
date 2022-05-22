@@ -70,7 +70,8 @@
                                         <td>
                                             <button class="btn btn-primary btn-xs"
                                                     data-target="#desc-modal" data-toggle="modal"
-                                                    onclick="setDescModal(this.dataset.desc)"
+                                                    onclick="setDescModal(this.dataset)"
+                                                    th:data-id="${item.id}"
                                                     th:data-desc="${item.description}">
                                                 <i class="link-icon" data-feather="plus"></i>
                                             </button>
@@ -126,12 +127,12 @@
             <div class="modal-body text-start">
                 <div class="mt-2">
                     <label for="description" class="col-form-label d-none"></label>
-                    <textarea class="form-control" rows="10"></textarea>
+                    <textarea class="form-control" rows="10" id="update-desc"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                <button type="button" class="btn btn-primary edit" onclick="createItem();">수정</button>
+                <button type="button" class="btn btn-primary edit" onclick="updateItem();">수정</button>
             </div>
         </div>
     </div>
@@ -180,8 +181,29 @@
             });
     }
 
-    function setDescModal(desc) {
+    function setDescModal({id, desc}) {
         modal_desc.value = desc;
+        modal_desc.dataset.id = id;
+    }
+
+    function updateItem() {
+        const description = modal_desc.value;
+        const id = modal_desc.dataset.id;
+        const options = {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json;'
+            },
+            body: JSON.stringify({description})
+        }
+        fetch('/api/item/' + id, options)
+            .then(res => res.json())
+            .then(res => {
+                if (res.data) location.reload();
+            })
+            .catch(e => {
+                console.error(e);
+            });
     }
 </script>
 </body>

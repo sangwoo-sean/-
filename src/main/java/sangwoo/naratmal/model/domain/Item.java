@@ -44,4 +44,8 @@ public class Item {
         item.updatedDate = LocalDateTime.now();
         return item;
     }
+
+    public void update(String description) {
+        this.description = description;
+    }
 }

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>NobleUI Responsive Bootstrap 4 Dashboard Template</title>
+    <!-- core:css -->
+    <link rel="stylesheet" href="/admin/vendors/core/core.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <link rel="stylesheet" href="/admin/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <!-- end plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/admin/fonts/feather-font/css/iconfont.css">
+    <link rel="stylesheet" href="/admin/vendors/flag-icon-css/css/flag-icon.min.css">
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="/admin/css/demo_1/style.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="/admin/images/favicon.png"/>
+</head>
+<body class="sidebar-dark">
+<div class="main-wrapper">
+
+    <!-- partial:../../partials/_sidebar.html -->
+    <div th:replace="admin/fragments/sidebar.html :: sidebar"/>
+    <!-- partial -->
+
+    <div class="page-wrapper">
+
+        <div class="page-content" style="margin-top: 0;">
+
+            <nav class="page-breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Data Table</li>
+                </ol>
+            </nav>
+
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h6 class="card-title">카드</h6>
+                            <div class="table-responsive">
+                                <table id="dataTableExample" class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>제목</th>
+                                        <th>등록날짜</th>
+                                        <th>내용</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody th:each="request : ${requestList}">
+                                    <tr>
+                                        <td th:text="${request.id}">Id</td>
+                                        <td th:text="${request.title}">제목</td>
+                                        <td th:text="${request.createdDate}">등록날짜</td>
+                                        <td>
+                                            <button class="btn btn-primary btn-xs">
+                                                <i class="link-icon" data-feather="plus"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- core:js -->
+<script src="/admin/vendors/core/core.js"></script>
+<!-- endinject -->
+<!-- plugin js for this page -->
+<script src="/admin/vendors/datatables.net/jquery.dataTables.js"></script>
+<script src="/admin/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+<!-- end plugin js for this page -->
+<!-- inject:js -->
+<script src="/admin/vendors/feather-icons/feather.min.js"></script>
+<script src="/admin/js/template.js"></script>
+<!-- endinject -->
+<!-- custom js for this page -->
+<script src="/admin/js/data-table.js"></script>
+<!-- end custom js for this page -->
+</body>
+</html>

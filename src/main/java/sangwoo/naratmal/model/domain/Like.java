@@ -23,6 +23,7 @@ public class Like {
         Like like = new Like();
         like.item = new Item(itemId);
         like.sessionId = sessionId;
+        like.createdDate = LocalDateTime.now();
         return like;
     }
 }

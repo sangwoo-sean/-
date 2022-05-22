@@ -16,6 +16,7 @@ public class Item {
     private Long id;
 
     private String title;
+    @Column(length = 5000)
     private String description;
     @ColumnDefault("0")
     private Long visited;

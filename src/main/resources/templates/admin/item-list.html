@@ -68,7 +68,10 @@
                                         <td th:text="${item.visited}">조회수</td>
                                         <td th:text="${item.updatedDate}">수정날짜</td>
                                         <td>
-                                            <button class="btn btn-primary btn-xs">
+                                            <button class="btn btn-primary btn-xs"
+                                                    data-target="#desc-modal" data-toggle="modal"
+                                                    onclick="setDescModal(this.dataset.desc)"
+                                                    th:data-desc="${item.description}">
                                                 <i class="link-icon" data-feather="plus"></i>
                                             </button>
                                         </td>
@@ -113,6 +116,27 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="desc-modal" data-keyboard="true" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">내용</h2>
+            </div>
+            <div class="modal-body text-start">
+                <div class="mt-2">
+                    <label for="description" class="col-form-label d-none"></label>
+                    <textarea class="form-control" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                <button type="button" class="btn btn-primary edit" onclick="createItem();">수정</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- core:js -->
 <script src="/admin/vendors/core/core.js"></script>
 <!-- endinject -->
@@ -130,6 +154,7 @@
 <script>
     const title_input = document.querySelector('#title');
     const description_input = document.querySelector('#description');
+    const modal_desc = document.querySelector('#desc-modal textarea');
 
     function createItem() {
         const title = title_input.value;
@@ -153,6 +178,10 @@
             .catch(e => {
                 console.error(e);
             });
+    }
+
+    function setDescModal(desc) {
+        modal_desc.value = desc;
     }
 </script>
 </body>

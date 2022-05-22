@@ -16,6 +16,7 @@ public class NewRequest {
     private Long id;
 
     private String title;
+    @Column(length = 2000)
     private String content;
     private LocalDateTime createdDate;
 

@@ -14,6 +14,7 @@ public class AmendRequest {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
+    @Column(length = 2000)
     private String content;
     private LocalDateTime createdDate;
 

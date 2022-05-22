@@ -20,7 +20,7 @@ public class LikeApiController {
     @Transactional
     public ApiResult<Boolean> likeItem(HttpServletRequest request, @PathVariable Long itemId) {
         String sessionId = request.getSession().getId();
-        boolean exist = likeRepository.existBySessionId(sessionId);
+        boolean exist = likeRepository.existBySessionIdAndItemId(sessionId, itemId);
         if (exist) {
             likeRepository.removeBySessionId(sessionId);
         } else {

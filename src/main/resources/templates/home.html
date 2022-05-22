@@ -121,11 +121,14 @@
     const attachCardClickEventHandler = (card) => {
         card.addEventListener('click', async () => {
             const itemId = card.dataset.id;
-            const {title, description} = await fetchItem(itemId);
+            const {title, description, liked, count} = await fetchItem(itemId);
 
             detail_modal.querySelector('.modal-title').innerText = title;
             detail_modal.querySelector('.description').innerText = description;
             edit_request_textarea.dataset.id = itemId;
+            detail_modal.querySelector('.like').innerHTML = liked ?
+                heart_fill_svg + count :
+                heart_empty_svg + count;
             detail_modal_bs.show();
         });
     }

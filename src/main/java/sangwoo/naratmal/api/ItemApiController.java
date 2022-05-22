@@ -7,17 +7,24 @@ import org.springframework.web.bind.annotation.*;
 import sangwoo.naratmal.model.domain.Item;
 import sangwoo.naratmal.model.dto.ApiResult;
 import sangwoo.naratmal.repository.ItemRepository;
+import sangwoo.naratmal.repository.LikeRepository;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequiredArgsConstructor
 public class ItemApiController {
 
     private final ItemRepository itemRepository;
+    private final LikeRepository likeRepository;
 
     @GetMapping("/api/item/{itemId}")
-    public ApiResult selectItem(@PathVariable Long itemId) {
-        Item item = itemRepository.findById(itemId);
-        return new ApiResult(new SelectItemResponse(item));
+    public ApiResult selectItem(HttpServletRequest request, @PathVariable Long itemId) {
+        String sessionId = request.getSession().getId();
+        Item item = itemRepository.findById(itemId); // item 조회
+        boolean liked = likeRepository.existBySessionIdAndItemId(sessionId, itemId); // 해당 세션이 해당 아이템을 liked 했는지 조회
+        Long count = likeRepository.countLikeByItemId(itemId); // 좋아요 개수
+        return new ApiResult(new SelectItemResponse(item, liked, count));
     }
 
     @PostMapping("/api/item")
@@ -48,11 +55,14 @@ public class ItemApiController {
     private static class SelectItemResponse {
         private String title;
         private String description;
-        private Long likes;
+        private boolean liked;
+        private long count;
 
-        public SelectItemResponse(Item item) {
+        public SelectItemResponse(Item item, boolean liked, Long count) {
             title = item.getTitle();
             description = item.getDescription();
+            this.liked = liked;
+            this.count = count;
         }
     }
 

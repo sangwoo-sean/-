@@ -2,6 +2,7 @@ package sangwoo.naratmal.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import sangwoo.naratmal.model.domain.Item;
 import sangwoo.naratmal.model.domain.Like;
 
 import javax.persistence.EntityManager;
@@ -37,5 +38,23 @@ public class LikeRepository {
         em.createQuery("delete from Like l where l.sessionId=:sessionId")
                 .setParameter("sessionId", sessionId)
                 .executeUpdate();
+    }
+
+    public boolean existBySessionIdAndItemId(String sessionId, Long itemId) {
+        return !em.createQuery("select l from Like l" +
+                        " where l.sessionId=:sessionId" +
+                        " and l.item.id =:itemId", Like.class)
+                .setParameter("sessionId", sessionId)
+                .setParameter("itemId", itemId)
+                .getResultList()
+                .isEmpty();
+    }
+
+    public Long countLikeByItemId(Long itemId) {
+        return (Long) em.createQuery("select count(l)" +
+                        " from Like l" +
+                        " where l.item.id=:itemId")
+                .setParameter("itemId", itemId)
+                .getSingleResult();
     }
 }

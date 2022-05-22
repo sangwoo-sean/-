@@ -36,6 +36,14 @@ public class ItemApiController {
         return new ApiResult(item.getId());
     }
 
+    @DeleteMapping("/api/item/{itemId}")
+    @Transactional
+    public ApiResult deleteItem(@PathVariable Long itemId) {
+        Item item = itemRepository.findById(itemId);
+        itemRepository.remove(item);
+        return new ApiResult(true);
+    }
+
     @Data
     private static class SelectItemResponse {
         private String title;

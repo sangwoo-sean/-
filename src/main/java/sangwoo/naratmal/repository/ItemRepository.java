@@ -26,4 +26,8 @@ public class ItemRepository {
     public Item findById(Long id) {
         return em.find(Item.class, id);
     }
+
+    public void remove(Item item) {
+        em.remove(item);
+    }
 }

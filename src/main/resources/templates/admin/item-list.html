@@ -59,6 +59,7 @@
                                         <th>조회수</th>
                                         <th>수정날짜</th>
                                         <th>내용</th>
+                                        <th>삭제</th>
                                     </tr>
                                     </thead>
                                     <tbody th:each="item : ${itemList}">
@@ -74,6 +75,11 @@
                                                     th:data-id="${item.id}"
                                                     th:data-desc="${item.description}">
                                                 <i class="link-icon" data-feather="plus"></i>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger btn-xs" th:onclick="'deleteItem(' + ${item.id} + ')'">
+                                                <i class="link-icon" data-feather="x"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -111,7 +117,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                <button type="button" class="btn btn-primary edit" onclick="createItem();">제출</button>
+                <button type="button" class="btn btn-primary edit" onclick="createItem();">추가</button>
             </div>
         </div>
     </div>
@@ -200,6 +206,20 @@
             .then(res => res.json())
             .then(res => {
                 if (res.data) location.reload();
+            })
+            .catch(e => {
+                console.error(e);
+            });
+    }
+
+    function deleteItem(itemId) {
+        if (!confirm('해당 카드를 정말 삭제하시겠습니까?')) return;
+
+        fetch('/api/item/' + itemId, {method: 'DELETE'})
+            .then(res => res.json())
+            .then(res => {
+                if (res.data)
+                    location.reload();
             })
             .catch(e => {
                 console.error(e);

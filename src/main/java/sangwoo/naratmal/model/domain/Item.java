@@ -1,6 +1,7 @@
 package sangwoo.naratmal.model.domain;
 
 import lombok.Getter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,6 +17,7 @@ public class Item {
 
     private String title;
     private String description;
+    @ColumnDefault("0")
     private Long visited;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;

@@ -95,7 +95,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary closed active" data-dismiss="modal">닫기</button>
-                <button type="button" class="btn btn-danger closed active" data-dismiss="modal">삭제</button>
+                <button type="button" class="btn btn-danger closed active" data-dismiss="modal" onclick="deleteNewRequest();">삭제</button>
             </div>
         </div>
     </div>
@@ -121,10 +121,26 @@
     const detail_modal_description = detail_modal.querySelector('.description');
 
     function setModalInfo(elem) {
-        const title = elem.closest('tr').querySelector('td:nth-child(2)').innerText;
+        const table_row = elem.closest('tr');
+        const id = table_row.querySelector('td:nth-child(1)').innerText;
+        const title = table_row.querySelector('td:nth-child(2)').innerText;
         const content = elem.dataset.content;
         detail_modal_title.innerText = title;
         detail_modal_description.innerText = content;
+        detail_modal_title.dataset.id = id;
+    }
+
+    function deleteNewRequest() {
+        const id = detail_modal_title.dataset.id;
+        fetch('/api/new-request/' + id, {method: 'DELETE'})
+            .then(res => res.json())
+            .then(res => {
+                if (res.data)
+                    location.reload();
+            })
+            .catch(e => {
+                console.error(e);
+            });
     }
 </script>
 </body>

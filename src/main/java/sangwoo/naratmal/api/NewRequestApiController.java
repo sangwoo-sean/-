@@ -3,9 +3,7 @@ package sangwoo.naratmal.api;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sangwoo.naratmal.model.domain.NewRequest;
 import sangwoo.naratmal.model.dto.ApiResult;
 import sangwoo.naratmal.repository.NewRequestRepository;
@@ -25,6 +23,14 @@ public class NewRequestApiController {
     public ApiResult<Boolean> saveNewRequest(@RequestBody @Valid CreateNewRequestRequest request) {
         NewRequest newRequest = NewRequest.create(request.getTitle(), request.getContent());
         newRequestRepository.save(newRequest);
+        return new ApiResult<>(true);
+    }
+
+    @Transactional
+    @DeleteMapping("/api/new-request/{id}")
+    public ApiResult<Boolean> deleteNewRequest(@PathVariable Long id) {
+        NewRequest newRequest = newRequestRepository.findById(id);
+        newRequestRepository.delete(newRequest);
         return new ApiResult<>(true);
     }
 

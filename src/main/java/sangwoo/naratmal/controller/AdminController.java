@@ -19,6 +19,7 @@ import sangwoo.naratmal.repository.AmendRequestRepository;
 import sangwoo.naratmal.repository.NewRequestRepository;
 import sangwoo.naratmal.service.ItemService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -58,7 +59,10 @@ public class AdminController {
     }
 
     @PostMapping("/login")
-    public String adminLogin(@Validated AdminDto adminDto, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String adminLogin(HttpServletRequest request,
+                             @Validated AdminDto adminDto,
+                             BindingResult result,
+                             RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("error", result.getAllErrors().get(0).getDefaultMessage());
             return "redirect:/admin/login";
@@ -73,6 +77,13 @@ public class AdminController {
             redirectAttributes.addFlashAttribute("error", "비밀번호가 틀렸습니다.");
             return "redirect:/admin/login";
         }
+        request.getSession().setAttribute("admin", true);
         return "redirect:/admin/items";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        request.getSession().removeAttribute("admin");
+        return "redirect:/admin/login";
     }
 }

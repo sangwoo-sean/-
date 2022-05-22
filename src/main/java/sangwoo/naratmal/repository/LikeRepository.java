@@ -2,7 +2,6 @@ package sangwoo.naratmal.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import sangwoo.naratmal.model.domain.Item;
 import sangwoo.naratmal.model.domain.Like;
 
 import javax.persistence.EntityManager;

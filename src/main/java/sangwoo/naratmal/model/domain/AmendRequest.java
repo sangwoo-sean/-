@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 public class AmendRequest {
-    @Id @GeneratedValue @Column(name = "amend_request_id")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "amend_request_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

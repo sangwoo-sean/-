@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 public class Item {
 
-    @Id @GeneratedValue @Column(name = "item_id")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "item_id")
     private Long id;
 
     private String title;

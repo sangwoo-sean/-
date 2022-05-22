@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Table(name = "likes")
 public class Like {
 
-    @Id @GeneratedValue @Column(name = "like_id")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "like_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

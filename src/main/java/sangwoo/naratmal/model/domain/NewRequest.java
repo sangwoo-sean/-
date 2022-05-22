@@ -2,17 +2,14 @@ package sangwoo.naratmal.model.domain;
 
 import lombok.Getter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 public class NewRequest {
 
-    @Id @GeneratedValue @Column(name = "new_request_id")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "new_request_id")
     private Long id;
 
     private String title;

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>NobleUI Responsive Bootstrap 4 Dashboard Template</title>
+    <title>나랏말</title>
     <!-- core:css -->
     <link rel="stylesheet" href="/admin/vendors/core/core.css">
     <!-- endinject -->
@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="/admin/css/demo_1/style.css">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="/admin/images/favicon.png"/>
+    <link rel="shortcut icon" href="/image/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/image/favicon.ico" type="image/x-icon">
 </head>
 <body class="sidebar-dark">
 <div class="main-wrapper">
@@ -42,7 +44,7 @@
                 <div class="col-md-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h6 class="card-title">카드</h6>
+                            <h6 class="card-title">추가 요청</h6>
                             <div class="table-responsive">
                                 <table id="dataTableExample" class="table">
                                     <thead>
@@ -59,7 +61,10 @@
                                         <td th:text="${request.title}">제목</td>
                                         <td th:text="${#temporals.format(request.createdDate, 'yyyy.MM.dd')}">등록날짜</td>
                                         <td>
-                                            <button class="btn btn-primary btn-xs">
+                                            <button class="btn btn-primary btn-xs"
+                                                    onclick="setModalInfo(this)"
+                                                    th:data-content="${request.content}"
+                                                    data-target="#detail-modal" data-toggle="modal">
                                                 <i class="link-icon" data-feather="plus"></i>
                                             </button>
                                         </td>
@@ -72,6 +77,26 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="detail-modal" data-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="title" id="staticBackdropLabel">제목</h3>
+            </div>
+            <div class="modal-body text-start">
+                <h5 class="description">내용</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary closed active" data-dismiss="modal">닫기</button>
+                <button type="button" class="btn btn-danger closed active" data-dismiss="modal">삭제</button>
+            </div>
         </div>
     </div>
 </div>
@@ -90,5 +115,17 @@
 <!-- custom js for this page -->
 <script src="/admin/js/data-table.js"></script>
 <!-- end custom js for this page -->
+<script>
+    const detail_modal = document.querySelector('#detail-modal');
+    const detail_modal_title = detail_modal.querySelector('.title');
+    const detail_modal_description = detail_modal.querySelector('.description');
+
+    function setModalInfo(elem) {
+        const title = elem.closest('tr').querySelector('td:nth-child(2)').innerText;
+        const content = elem.dataset.content;
+        detail_modal_title.innerText = title;
+        detail_modal_description.innerText = content;
+    }
+</script>
 </body>
 </html>
